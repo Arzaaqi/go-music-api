@@ -1,0 +1,146 @@
+basePath: /
+definitions:
+  models.Music:
+    properties:
+      album:
+        example: A Night at the Opera
+        type: string
+      artist:
+        example: Queen
+        type: string
+      genre:
+        example: Rock
+        type: string
+      id:
+        example: 1
+        type: integer
+      length:
+        example: 5
+        type: integer
+      name:
+        example: Bohemian Rhapsody
+        type: string
+      writer:
+        example: Freddie Mercury
+        type: string
+      year:
+        example: 1975
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API sederhana untuk mengelola koleksi musik
+  title: Music API
+  version: "1.0"
+paths:
+  /musics:
+    get:
+      description: Ambil semua data musik
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Music'
+            type: array
+      summary: Get all musics
+      tags:
+      - musics
+    post:
+      consumes:
+      - application/json
+      description: Tambahkan musik ke dalam koleksi
+      parameters:
+      - description: Music Data
+        in: body
+        name: music
+        required: true
+        schema:
+          $ref: '#/definitions/models.Music'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Music'
+      summary: Tambah musik baru
+      tags:
+      - musics
+  /musics/{id}:
+    delete:
+      description: Hapus data musik berdasarkan ID
+      parameters:
+      - description: Music ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Deleted successfully
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Hapus musik
+      tags:
+      - musics
+    get:
+      description: Ambil data musik berdasarkan ID
+      parameters:
+      - description: Music ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Music'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Get music by id
+      tags:
+      - musics
+    put:
+      consumes:
+      - application/json
+      description: Edit data musik berdasarkan ID
+      parameters:
+      - description: Music ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Music Data
+        in: body
+        name: music
+        required: true
+        schema:
+          $ref: '#/definitions/models.Music'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Music'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Update musik
+      tags:
+      - musics
+swagger: "2.0"
